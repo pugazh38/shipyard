@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipyard Services</title>
+    <link rel="icon" type="image/jpg" href="zane shipyard/media/logo.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a192f;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            text-align: center;
+            color: #0056b3;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            perspective: 1500px;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            width: 250px;
+            height: 320px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            padding: 15px;
+            transition: transform 0.5s ease, box-shadow 0.3s ease, scale 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: rotateY(15deg) rotateX(15deg) scale(1.05);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #003f8f;
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            background-color: #28a745;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        .form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .overlay-content h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Shipyard Services</h1>
+
+    <div class="container">
+        <!-- Ship Building -->
+        <div class="service-card ship-building fade-in">
+            <h2>Ship Building</h2>
+            <p>Discover the technologies used in shipbuilding. Place your order now!</p>
+            <button onclick="showForm('ship-building')">Order Now</button>
+        </div>
+        
+        <!-- Ship Repair -->
+        <div class="service-card ship-repair fade-in">
+            <h2>Ship Repair</h2>
+            <p>Select an option to begin:</p>
+            <button onclick="showForm('complaint-form')">Complaint Submission</button>
+            <button onclick="showForm('repair-status')">Check Repair Status</button>
+        </div>
+
+        <!-- Marine Engineering -->
+        <div class="service-card marine-engineering fade-in">
+            <h2>Marine Engineering</h2>
+            <p>Meet our marine engineers and trainers!</p>
+        </div>
+
+        <!-- Financials -->
+        <div class="service-card financials fade-in">
+            <h2>Financials</h2>
+            <p>View financial reports for transparency.</p>
+        </div>
+
+        <!-- Facilities -->
+        <div class="service-card facilities fade-in">
+            <h2>Facilities</h2>
+            <p>Explore the facilities at our shipyard.</p>
+        </div>
+    </div>
+
+    <!-- Form for Ship Building Order -->
+    <div class="form-container" id="ship-building-form">
+        <h3>Ship Building Order</h3>
+        <input type="number" id="budget" placeholder="Budget/Amount" required>
+        <select id="tech">
+            <option value="Traditional">Traditional Technology</option>
+            <option value="Modern">Modern Technology</option>
+        </select>
+        <select id="ship-type">
+            <option value="Oil">Oil</option>
+            <option value="Cargo">Cargo</option>
+            <option value="Container">Container</option>
+        </select>
+        <button onclick="submitForm('ship-building')">Submit</button>
+    </div>
+
+    <!-- Form for Ship Repair Complaint -->
+    <div class="form-container" id="complaint-form">
+        <h3>Ship Repair Complaint</h3>
+        <input type="text" id="model" placeholder="Ship Model" required>
+        <input type="text" id="year" placeholder="Year of Manufacture" required>
+        <select id="repair-type">
+            <option value="Oil">Oil</option>
+            <option value="Cargo">Cargo</option>
+            <option value="Container">Container</option>
+        </select>
+        <textarea id="issue" placeholder="Describe the issue" required></textarea>
+        <button onclick="submitForm('complaint')">Submit</button>
+    </div>
+
+    <!-- Overlay for confirmation -->
+    <div class="form-overlay" id="form-overlay">
+        <div class="overlay-content">
+            <h2>Form Submitted Successfully!</h2>
+            <p>Thank you for your submission. We will process your request soon.</p>
+            <button onclick="closeForm()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Show form based on the service selected
+        function showForm(formType) {
+            document.getElementById('form-overlay').style.display = 'flex';
+            document.querySelector('.form-container').style.display = 'none';
+
+            if (formType === 'ship-building') {
+                document.getElementById('ship-building-form').style.display = 'block';
+            } else if (formType === 'complaint-form') {
+                document.getElementById('complaint-form').style.display = 'block';
+            }
+        }
+
+        // Handle form submission (validation and logging for now)
+        function submitForm(formType) {
+            let isValid = true;
+
+            if (formType === 'ship-building') {
+                let budget = document.getElementById('budget').value;
+                let tech = document.getElementById('tech').value;
+                let shipType = document.getElementById('ship-type').value;
+
+                if (!budget || !tech || !shipType) {
+                    alert('Please fill out all fields');
+                    isValid = false;
+                }
+
+                console.log(`Ship Building Order: Budget: ${budget}, Technology: ${tech}, Ship Type: ${shipType}`);
+            } else if (formType === 'complaint') {
+                let model = document.getElementById('model').value;
+                let year = document.getElementById('year').value;
+                let repairType = document.getElementById('repair-type').value;
+                let issue = document.getElementById('issue').value;
+
+                if (!model || !year || !repairType || !issue) {
+                    alert('Please fill out all fields');
+                    isValid = false;
+                }
+
+                console.log(`Ship Repair Complaint: Model: ${model}, Year: ${year}, Repair Type: ${repairType}, Issue: ${issue}`);
+            }
+
+            if (isValid) {
+                closeForm();
+            }
+        }
+
+        // Close form overlay
+        function closeForm() {
+            document.getElementById('form-overlay').style.display = 'none';
+            document.querySelector('.form-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
